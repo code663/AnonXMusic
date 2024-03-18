@@ -7,7 +7,7 @@ from pyrogram.types import (
     InlineKeyboardMarkup,
     Message,
 )
-
+from pyrogram.types import *
 from AnonXMusic import app
 from AnonXMusic.utils.database import (
     add_nonadmin_chat,
