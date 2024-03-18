@@ -7,6 +7,7 @@ from pyrogram.types import (
     InlineKeyboardMarkup,
     Message,
 )
+import random
 from pyrogram.types import *
 from AnonXMusic import app
 from AnonXMusic.utils.database import (
