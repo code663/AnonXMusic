@@ -80,12 +80,15 @@ async def repoback_back_markup(client, CallbackQuery: CallbackQuery, _):
     except:
         pass
     if CallbackQuery.message.chat.type == ChatType.PRIVATE:
+        await app.resolve_peer(OWNER_ID)
+        OWNER = OWNER_ID
+        buttons = private_panel(_)
         await CallbackQuery.edit_message_media(
             InputMediaPhoto(media=random.choice(SHALU_PICS),
            caption=_["start_2"].format(CallbackQuery.from_user.mention, app.mention),
         ))
         return await CallbackQuery.edit_message_reply_markup(
-            reply_markup=InlineKeyboardMarkup(START_BUT)
+            reply_markup=InlineKeyboardMarkup(buttons)
                                   )
 
 
