@@ -37,6 +37,12 @@ from AnonXMusic.utils.inline.start import private_panel
 from config import BANNED_USERS, OWNER_ID
 
 
+SHALU_PICS = [
+"https://telegra.ph/file/4b637281b81d3f637f643.jpg",
+"https://telegra.ph/file/e1b2272788148fc8f7dba.jpg",
+"https://telegra.ph/file/6cd7dde536d6202f03445.jpg",
+]
+
 @app.on_message(
     filters.command(["settings", "setting"]) & filters.group & ~BANNED_USERS
 )
@@ -47,6 +53,39 @@ async def settings_mar(client, message: Message, _):
         _["setting_1"].format(app.mention, message.chat.id, message.chat.title),
         reply_markup=InlineKeyboardMarkup(buttons),
     )
+
+@app.on_callback_query(filters.regex("sourcee"))
+async def gib_repository_callback(_, callback_query):
+    await callback_query.edit_message_media( media=InputMediaVideo("https://telegra.ph/file/8ae73d62558af3e088d9d.mp4", has_spoiler=True),
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        text="ʙᴀᴄᴋ",
+                        callback_data="zsettingsback_helper",
+                    ),
+                    InlineKeyboardButton(text="Cʟᴏsᴇ", callback_data=f"close"),
+                ]
+            ]
+        )
+    )
+
+
+@app.on_callback_query(filters.regex("zsettingsback_helper") & ~BANNED_USERS)
+@languageCB
+async def repoback_back_markup(client, CallbackQuery: CallbackQuery, _):
+    try:
+        await CallbackQuery.answer()
+    except:
+        pass
+    if CallbackQuery.message.chat.type == ChatType.PRIVATE:
+        await CallbackQuery.edit_message_media(
+            InputMediaPhoto(media=random.choice(SHALU_PICS),
+           caption=_["start_2"].format(CallbackQuery.from_user.mention, app.mention),
+        ))
+        return await CallbackQuery.edit_message_reply_markup(
+            reply_markup=InlineKeyboardMarkup(START_BUT)
+                                  )
 
 
 @app.on_callback_query(filters.regex("settings_helper") & ~BANNED_USERS)
