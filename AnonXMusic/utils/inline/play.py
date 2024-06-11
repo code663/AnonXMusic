@@ -1,8 +1,10 @@
+import random
 import math
-
-from pyrogram.types import InlineKeyboardButton
-
-from AnonXMusic.utils.formatters import time_to_seconds
+from typing import Union
+from config import SUPPORT_CHAT
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from ThavaXMusic import app
+from ThavaXMusic.utils.formatters import time_to_seconds
 
 
 def track_markup(_, videoid, user_id, channel, fplay):
@@ -17,7 +19,7 @@ def track_markup(_, videoid, user_id, channel, fplay):
                 callback_data=f"MusicStream {videoid}|{user_id}|v|{channel}|{fplay}",
             ),
         ],
-        [
+        [    
             InlineKeyboardButton(
                 text=_["CLOSE_BUTTON"],
                 callback_data=f"forceclose {videoid}|{user_id}",
@@ -32,11 +34,7 @@ def stream_markup_timer(_, chat_id, played, dur):
     duration_sec = time_to_seconds(dur)
     percentage = (played_sec / duration_sec) * 100
     umm = math.floor(percentage)
-    
-    buttons = [
-        [
-            InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
-        if 0 < umm <= 10:
+    if 0 < umm <= 10:
         bar = "✪⭑⭑⭑⭑⭑⭑⭑⭑⭑"
     elif 10 < umm < 20:
         bar = "⭑✪⭑⭑⭑⭑⭑⭑⭑⭑"
@@ -55,30 +53,14 @@ def stream_markup_timer(_, chat_id, played, dur):
     elif 80 <= umm < 95:
         bar = "⭑⭑⭑⭑⭑⭑⭑⭑✪⭑"
     else:
-        bar = "⭑⭑⭑⭑⭑⭑⭑⭑⭑✪"    
-            InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
-            InlineKeyboardButton(text="↻", callback_data=f"ADMIN Replay|{chat_id}"),
-            InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
-            InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
-        ],
-        [
+        bar = "⭑⭑⭑⭑⭑⭑⭑⭑⭑✪"
+    buttons = [
+                [
             InlineKeyboardButton(
                 text=f"{played} {bar} {dur}",
                 callback_data="GetTimer",
             )
         ],
-        [
-            InlineKeyboardButton(text="𝖲𝗎𝗉𝗉𝗈𝗋𝗍", url=f"https://t.me/angel_world11"),
-            InlineKeyboardButton(text="𝖮𝗐𝗇𝖾𝗋", url=f"https://t.me/PAWAN_IS_BACK"),
-         ],
-       
-        [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
-    ]
-    return buttons
-
-
-def stream_markup(_, chat_id):
-    buttons = [
         [
             InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
             InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
@@ -86,7 +68,26 @@ def stream_markup(_, chat_id):
             InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
             InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
         ],
-        [
+                 [
+            InlineKeyboardButton(text="𝖲𝗎𝗉𝗉𝗈𝗋𝗍", url=f"https://t.me/angel_world11"),
+            InlineKeyboardButton(text="𝖮𝗐𝗇𝖾𝗋", url=f"https://t.me/PAWAN_IS_BACK"),
+         ],
+        
+        [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
+    ]
+    return buttons
+
+
+def stream_markup(_, chat_id):
+    buttons = [
+                [
+            InlineKeyboardButton(text="▷", callback_data=f"ADMIN Resume|{chat_id}"),
+            InlineKeyboardButton(text="II", callback_data=f"ADMIN Pause|{chat_id}"),
+            InlineKeyboardButton(text="↻", callback_data=f"ADMIN Replay|{chat_id}"),
+            InlineKeyboardButton(text="‣‣I", callback_data=f"ADMIN Skip|{chat_id}"),
+            InlineKeyboardButton(text="▢", callback_data=f"ADMIN Stop|{chat_id}"),
+        ],
+                 [
             InlineKeyboardButton(text="𝖲𝗎𝗉𝗉𝗈𝗋𝗍", url=f"https://t.me/angel_world11"),
             InlineKeyboardButton(text="𝖮𝗐𝗇𝖾𝗋", url=f"https://t.me/PAWAN_IS_BACK"),
          ],
@@ -101,11 +102,11 @@ def playlist_markup(_, videoid, user_id, ptype, channel, fplay):
         [
             InlineKeyboardButton(
                 text=_["P_B_1"],
-                callback_data=f"AnonyPlaylists {videoid}|{user_id}|{ptype}|a|{channel}|{fplay}",
+                callback_data=f"THAVAPlaylists {videoid}|{user_id}|{ptype}|a|{channel}|{fplay}",
             ),
             InlineKeyboardButton(
                 text=_["P_B_2"],
-                callback_data=f"AnonyPlaylists {videoid}|{user_id}|{ptype}|v|{channel}|{fplay}",
+                callback_data=f"THAVAPlaylists {videoid}|{user_id}|{ptype}|v|{channel}|{fplay}",
             ),
         ],
         [
