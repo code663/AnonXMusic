@@ -3,8 +3,8 @@ import math
 from typing import Union
 from config import SUPPORT_CHAT
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from ThavaXMusic import app
-from ThavaXMusic.utils.formatters import time_to_seconds
+from AnonXMusic import app
+from AnonXMusic.utils.formatters import time_to_seconds
 
 
 def track_markup(_, videoid, user_id, channel, fplay):
